@@ -7,7 +7,7 @@ import useGetCurrentUser from './hooks/useGetCurrentUser'
 import { useDispatch, useSelector } from 'react-redux'
 import Home from './pages/Home'
 import useGetCity from './hooks/useGetCity'
-import useGetMyshop from './hooks/useGetMyShop'
+import useGetMyShop from './hooks/useGetMyShop'
 import CreateEditShop from './pages/CreateEditShop'
 import AddItem from './pages/AddItem'
 import EditItem from './pages/EditItem'
@@ -32,7 +32,7 @@ function App() {
   useGetCurrentUser()
 useUpdateLocation()
   useGetCity()
-  useGetMyshop()
+  useGetMyShop()
   useGetShopByCity()
   useGetItemsByCity()
   useGetMyOrders()
