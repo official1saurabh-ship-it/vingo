@@ -1,5 +1,5 @@
 import User from "../models/user.model.js"
-import bcrypt, { hash } from "bcryptjs"
+import bcrypt from "bcryptjs"
 import genToken from "../utils/token.js"
 import { sendOtpMail } from "../utils/mail.js"
 export const signUp=async (req,res) => {

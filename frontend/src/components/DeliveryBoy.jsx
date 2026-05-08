@@ -76,10 +76,9 @@ const totalEarning=todayDeliveries.reduce((sum,d)=>sum + d.count*ratePerDelivery
   const acceptOrder=async (assignmentId) => {
     try {
       const result=await axios.get(`${serverUrl}/api/order/accept-order/${assignmentId}`,{withCredentials:true})
-    console.log(result.data)
     await getCurrentOrder()
     } catch (error) {
-      console.log(error)
+      // error
     }
   }
 

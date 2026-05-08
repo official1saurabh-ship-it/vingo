@@ -23,7 +23,7 @@ function Nav() {
             const result = await axios.get(`${serverUrl}/api/auth/signout`, { withCredentials: true })
             dispatch(setUserData(null))
         } catch (error) {
-            console.log(error)
+            // handle error
         }
     }
 

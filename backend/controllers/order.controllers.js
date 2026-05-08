@@ -5,7 +5,6 @@ import User from "../models/user.model.js"
 import { sendDeliveryOtpMail } from "../utils/mail.js"
 import RazorPay from "razorpay"
 import dotenv from "dotenv"
-import { count } from "console"
 
 dotenv.config()
 let instance = new RazorPay({

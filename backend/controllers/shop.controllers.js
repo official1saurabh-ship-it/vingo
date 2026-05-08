@@ -6,7 +6,6 @@ export const createEditShop=async (req,res) => {
        const {name,city,state,address}=req.body
        let image;
        if(req.file){
-        console.log(req.file)
         image=await uploadOnCloudinary(req.file.path)
        } 
        let shop=await Shop.findOne({owner:req.userId})
@@ -34,7 +33,7 @@ export const getMyShop=async (req,res) => {
             options:{sort:{updatedAt:-1}}
         })
         if(!shop){
-            return null
+            return res.status(200).json(null)
         }
         return res.status(200).json(shop)
     } catch (error) {

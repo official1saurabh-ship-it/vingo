@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Nav from './NaV.JSX'
+import Nav from './Nav'
 import { categories } from '../category'
 import CategoryCard from './CategoryCard'
 import { FaCircleChevronLeft } from "react-icons/fa6";
@@ -57,26 +57,27 @@ setRightButton(element.scrollLeft+element.clientWidth<element.scrollWidth)
 
 
   useEffect(()=>{
-    if(cateScrollRef.current){
+    const cateElement = cateScrollRef.current
+    const shopElement = shopScrollRef.current
+
+    const handleCateScroll = () => updateButton(cateScrollRef, setShowLeftCateButton, setShowRightCateButton)
+    const handleShopScroll = () => updateButton(shopScrollRef, setShowLeftShopButton, setShowRightShopButton)
+
+    if(cateElement){
       updateButton(cateScrollRef,setShowLeftCateButton,setShowRightCateButton)
+      cateElement.addEventListener('scroll', handleCateScroll)
+    }
+    if(shopElement){
       updateButton(shopScrollRef,setShowLeftShopButton,setShowRightShopButton)
-      cateScrollRef.current.addEventListener('scroll',()=>{
-        updateButton(cateScrollRef,setShowLeftCateButton,setShowRightCateButton)
-      })
-      shopScrollRef.current.addEventListener('scroll',()=>{
-         updateButton(shopScrollRef,setShowLeftShopButton,setShowRightShopButton)
-      })
-     
+      shopElement.addEventListener('scroll', handleShopScroll)
     }
 
-    return ()=>{cateScrollRef?.current?.removeEventListener("scroll",()=>{
-        updateButton(cateScrollRef,setShowLeftCateButton,setShowRightCateButton)
-      })
-         shopScrollRef?.current?.removeEventListener("scroll",()=>{
-        updateButton(shopScrollRef,setShowLeftShopButton,setShowRightShopButton)
-      })}
+    return ()=>{
+      if(cateElement) cateElement.removeEventListener("scroll", handleCateScroll)
+      if(shopElement) shopElement.removeEventListener("scroll", handleShopScroll)
+    }
 
-  },[categories])
+  },[categories, shopInMyCity])
 
 
   return (
