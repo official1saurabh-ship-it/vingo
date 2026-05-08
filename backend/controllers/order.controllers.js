@@ -32,14 +32,15 @@ export const placeOrder = async (req, res) => {
             groupItemsByShop[shopId].push(item)
         });
 
-        const shopOrders = await Promise.all(Object.keys(groupItemsByShop).map(async (shopId) => {
+        const shopOrders = []
+        for (const shopId of Object.keys(groupItemsByShop)) {
             const shop = await Shop.findById(shopId).populate("owner")
             if (!shop) {
-                return res.status(400).json({ message: "shop not found" })
+                return res.status(400).json({ message: `shop with id ${shopId} not found` })
             }
             const items = groupItemsByShop[shopId]
             const subtotal = items.reduce((sum, i) => sum + Number(i.price) * Number(i.quantity), 0)
-            return {
+            shopOrders.push({
                 shop: shop._id,
                 owner: shop.owner._id,
                 subtotal,
@@ -49,9 +50,8 @@ export const placeOrder = async (req, res) => {
                     quantity: i.quantity,
                     name: i.name
                 }))
-            }
+            })
         }
-        ))
 
         if (paymentMethod == "online") {
             const razorOrder = await instance.orders.create({
